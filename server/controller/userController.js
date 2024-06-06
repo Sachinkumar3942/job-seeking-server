@@ -6,24 +6,24 @@ import { sendToken } from "../utils/jwtToken.js";
 export const register=catchAsyncError(async(req,res,next)=>{
     const {name,email,phone,role,password} = req.body;
     if(!name || !email || !phone || !role || !password){
-        return next(new ErrorHandler("Please fill all the columns in the form!"))
+        return next(new ErrorHandler("Please fill all the columns in the form!",400))
     }
     const isEmail=await User.findOne({email});
     if(isEmail){
-        return next(new ErrorHandler("Email already exists!"))
+        return next(new ErrorHandler("Email already exists!",400))
     }
 
     const user= await User.create({
         name,email,phone,role,password,
     })
-    // sendToken(user,200,res,"User Registered succssfully!");
+    sendToken(user,200,res,"User Registered succssfully!");
 
 
-    res.status(200).json({
-        success: true,
-        message: "User registered!",
-        user,
-    })
+    // res.status(200).json({
+    //     success: true,
+    //     message: "User registered!",
+    //     user,
+    // })
 })
 
 export const login=catchAsyncError(async(req,res,next)=>{
@@ -50,4 +50,24 @@ export const login=catchAsyncError(async(req,res,next)=>{
     // })
 })
 
-// export const logout
+export const logout = catchAsyncError(async (req, res, next) => {
+    res
+      .status(201)
+      .cookie("token", "", {
+        httpOnly: true,
+        expires: new Date(Date.now()),
+      })
+      .json({
+        success: true,
+        message: "Logged Out Successfully.",
+      });
+  });
+  
+  
+  export const getUser = catchAsyncError((req, res, next) => {
+    const user = req.user;
+    res.status(200).json({
+      success: true,
+      user,
+    });
+  });
