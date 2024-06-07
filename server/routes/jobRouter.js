@@ -8,5 +8,5 @@ router.get("/getmyjobs",isAuthorized,getMyJobs);
 router.post("/post",isAuthorized,postJob);
 router.put("/update/:id",isAuthorized,updateJob);
 router.delete("/delete/:id",isAuthorized,deleteJob);
-router.get("/:id",getSingleJob);
+router.get("/:id",isAuthorized,getSingleJob);
 export default router;
