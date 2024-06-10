@@ -3,6 +3,7 @@ import ErrorHandler from "../middleware/error.js"
 import { User } from "../models/userSchema.js";
 import { sendToken } from "../utils/jwtToken.js";
 
+
 export const register=catchAsyncError(async(req,res,next)=>{
     const {name,email,phone,role,password} = req.body;
     if(!name || !email || !phone || !role || !password){
