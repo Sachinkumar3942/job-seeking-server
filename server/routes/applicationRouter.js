@@ -4,8 +4,8 @@ import {isAuthorized} from "../middleware/auth.js"
 
 const router=express.Router();
 router.post("/post",isAuthorized,postApplication);
-router.post("/employer/getall",isAuthorized,employerGetAllApplications)
-router.post("/jobseeker/getall",isAuthorized,jobSeekerGetAllApplications)
-router.post("/delete/:id",isAuthorized,jobSeekerDeleteApplication)
+router.get("/employer/getall",isAuthorized,employerGetAllApplications)
+router.get("/jobseeker/getall",isAuthorized,jobSeekerGetAllApplications)
+router.delete("/delete/:id",isAuthorized,jobSeekerDeleteApplication)
 
 export default router;
